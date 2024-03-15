@@ -5,7 +5,7 @@ var routes = require("./routes");
 
 var app = express();
 app.use(express.json());
-app.use("/images", express.static(__dirname + "/uploads"));
+app.use("/images", express.static(__dirname + "/uploads/images"));
 app.use("/api", routes);
 
 app.listen(port, host, function () {
