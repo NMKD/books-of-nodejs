@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router({ mergeParams: true });
+var _ = require("lodash");
 var { v4: uuid } = require("uuid");
 var { Books } = require("../../constructors/bookClass");
 
@@ -20,7 +21,14 @@ var { books } = store;
 
 router.get("/", async (req, res) => {
   try {
-    books.length > 0 ? res.json(books) : res.json({ data: "store is empty" });
+    if (books.length > 0) {
+      res.render("books/index", {
+        title: "Библиотека книг о программировании",
+        books,
+      });
+    } else {
+      res.json({ data: "store is empty" });
+    }
   } catch (error) {
     console.error(error);
     res.json({ err: error.message });
@@ -29,14 +37,19 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
+    if (_.isEmpty(req.params)) return res.json({ err: "Params is empty" });
     const { id } = req.params;
     if (id) {
       const book = books.find((item) => item.id === Number(id));
       if (book) {
-        return res.json(book);
+        res.render("books/view", {
+          title: `Читать о книге`,
+          book,
+        });
+      } else {
+        res.status(404);
+        return res.json({ error: "Not Found" });
       }
-      res.status(404);
-      return res.json({ error: "Not Found" });
     }
   } catch (error) {
     console.log(error);
@@ -72,6 +85,7 @@ router.post("/", async (req, res) => {
 // To change the book
 router.put("/:id", async (req, res) => {
   try {
+    if (_.isEmpty(req.params)) return res.json({ err: "Params is empty" });
     const { id } = req.params;
     if (id && Object.keys(req.body).length > 0) {
       let book = books.find((item) => item.id === Number(id));
@@ -98,6 +112,7 @@ router.put("/:id", async (req, res) => {
 // To delete the book
 router.delete("/:id", async (req, res) => {
   try {
+    if (_.isEmpty(req.params)) return res.json({ err: "Params is empty" });
     const { id } = req.params;
     if (id) {
       let index = books.findIndex((item) => item.id === Number(id));

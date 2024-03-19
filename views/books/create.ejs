@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <%- include('../partials/header.ejs', {title: title}) %> <%-
+  include('../partials/menu') %>
+  <body>
+    <div class="container">
+      <h1 class="display-4 my-5"><%= title %></h1>
+      <div class="row">
+        <div class="col-sm-6"><%- include('./form.ejs', {book}) %></div>
+      </div>
+    </div>
+    <%- include('../partials/scripts.ejs') %>
+  </body>
+</html>

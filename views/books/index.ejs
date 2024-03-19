@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <%- include('../partials/header.ejs', {title: title}) %> <%-
+  include('../partials/menu') %>
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-4"><%= title %></h1>
+    </div>
+    <div class="container">
+      <a class="btn btn-sm btn-primary mb-3" href="book/create">Добавить запись</a>
+      <ul class="list-group">
+        <% for(let i=0; i<books.length; i++) {%>
+          <li class="list-group-item d-flex justify-content-between align-items-center"><%=books[i].title%>
+            <div>
+              <button type="button" class="btn btn-outline-success"> <a href="books/<%= books[i].id %>">&#10067;</a>	</button>
+            </div>
+          </li>
+          <%} %>
+      </ul>
+    </div>
+    <%- include('../partials/scripts.ejs') %>
+  </body>
+</html>
