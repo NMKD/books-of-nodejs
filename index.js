@@ -5,6 +5,8 @@ var routes = require("./routes");
 
 var app = express();
 app.use(express.json());
+app.set("view engine", "ejs");
+
 app.use("/images", express.static(__dirname + "/uploads/images"));
 app.use("/api", routes);
 

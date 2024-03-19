@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router({ mergeParams: true });
+var express = require("express");
+var router = express.Router({ mergeParams: true });
 
-const fileMulter = require("../../middleware/upload");
+var fileMulter = require("../../middleware/upload");
 
 router.post("/image", fileMulter.single("file"), async (req, res) => {
   if (req.file) {
